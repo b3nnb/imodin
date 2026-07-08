@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🐾 Odin's Dog Sitter Card</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    .card {
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid #334155;
+      border-radius: 20px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    .paw-icon { font-size: 48px; margin-bottom: 8px; display: block; }
+
+    .dog-name {
+      font-size: 36px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 4px;
+    }
+
+    .dog-subtitle {
+      color: #94a3b8;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+    }
+
+    /* Section cards */
+    .section {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 18px;
+      background: #162032;
+      border-bottom: 1px solid #334155;
+    }
+
+    .section-icon { font-size: 20px; }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #94a3b8;
+    }
+
+    .section-body { padding: 14px 18px; }
+
+    /* Vet section */
+    .vet-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #f1f5f9;
+      margin-bottom: 12px;
+    }
+
+    .vet-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .vet-label {
+      color: #64748b;
+      min-width: 60px;
+      flex-shrink: 0;
+    }
+
+    .vet-value { color: #e2e8f0; }
+
+    .vet-value a {
+      color: #818cf8;
+      text-decoration: none;
+    }
+
+    .phone-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 12px;
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      border-radius: 12px;
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+    }
+
+    .phone-btn:hover { opacity: 0.9; }
+
+    /* Commands */
+    .commands-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .command-pill {
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #c084fc;
+      text-align: center;
+    }
+
+    /* Foods */
+    .food-group { margin-bottom: 12px; }
+    .food-group:last-child { margin-bottom: 0; }
+
+    .food-group-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .food-group-title.safe { color: #4ade80; }
+    .food-group-title.unsafe { color: #f87171; }
+
+    .food-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .food-pill {
+      border-radius: 20px;
+      padding: 5px 12px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .food-pill.safe {
+      background: rgba(74, 222, 128, 0.12);
+      border: 1px solid rgba(74, 222, 128, 0.3);
+      color: #4ade80;
+    }
+
+    .food-pill.unsafe {
+      background: rgba(248, 113, 113, 0.12);
+      border: 1px solid rgba(248, 113, 113, 0.3);
+      color: #f87171;
+    }
+
+    /* Traits */
+    .trait {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #1e3a5f22;
+      font-size: 14px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    .trait:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .trait-emoji { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+    /* Meds */
+    .med-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #1e3a5f22;
+    }
+
+    .med-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .med-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #f1f5f9;
+      margin-bottom: 2px;
+    }
+
+    .med-note {
+      font-size: 13px;
+      color: #94a3b8;
+      line-height: 1.4;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      color: #475569;
+      font-size: 12px;
+      padding: 8px;
+    }
+
+    /* Alert box */
+    .alert {
+      background: rgba(248, 113, 113, 0.1);
+      border: 1px solid rgba(248, 113, 113, 0.3);
+      border-radius: 12px;
+      padding: 12px 16px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-size: 13px;
+      color: #fca5a5;
+      line-height: 1.5;
+    }
+
+    .alert-icon { font-size: 18px; flex-shrink: 0; }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <!-- Header -->
+    <div class="header">
+      <span class="paw-icon">🐶</span>
+      <div class="dog-name">Odin</div>
+      <div class="dog-subtitle">Benn's Dog · Dog Sitter Info Card</div>
+    </div>
+
+    <!-- Emergency Alert -->
+    <div class="alert">
+      <span class="alert-icon">🚨</span>
+      <span>If Odin is in distress or injured, call the vet immediately. After hours, go directly to the nearest emergency animal hospital.</span>
+    </div>
+
+    <!-- Vet Info -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">🏥</span>
+        <span class="section-title">Veterinarian</span>
+      </div>
+      <div class="section-body">
+        <div class="vet-name">Camino Real Pet Clinic</div>
+        <div class="vet-row">
+          <span class="vet-label">📍 Address</span>
+          <span class="vet-value">5700 Camino Real<br>Bakersfield, CA 93309</span>
+        </div>
+        <div class="vet-row">
+          <span class="vet-label">🕐 Hours</span>
+          <span class="vet-value">Mon–Fri 8am–6pm<br>Sat 8am–2pm · Sun Closed</span>
+        </div>
+        <div class="vet-row">
+          <span class="vet-label">📧 Email</span>
+          <span class="vet-value"><a href="mailto:caminorealpet@gmail.com">caminorealpet@gmail.com</a></span>
+        </div>
+        <a class="phone-btn" href="tel:6618313900">
+          📞 &nbsp;(661) 831-3900
+        </a>
+      </div>
+    </div>
+
+    <!-- Known Commands -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">🎓</span>
+        <span class="section-title">Known Commands</span>
+      </div>
+      <div class="section-body">
+        <div class="commands-grid">
+          <div class="command-pill">Sit</div>
+          <div class="command-pill">Stay</div>
+          <div class="command-pill">Down</div>
+          <div class="command-pill">Come / Here</div>
+          <div class="command-pill">Off</div>
+          <div class="command-pill">Leave it</div>
+          <div class="command-pill">Shake / Paw</div>
+          <div class="command-pill">Go to bed</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Foods -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">🍎</span>
+        <span class="section-title">Human Foods</span>
+      </div>
+      <div class="section-body">
+        <div class="food-group">
+          <div class="food-group-title safe">🐾 Human foods he likes</div>
+          <div class="food-pills">
+            <span class="food-pill safe">Carrots</span>
+            <span class="food-pill safe">Banana</span>
+            <span class="food-pill safe">Apple slices</span>
+            <span class="food-pill safe">Broccoli</span>
+            <span class="food-pill safe">Plain white rice</span>
+            <span class="food-pill safe">Plain chicken</span>
+            <span class="food-pill safe">Watermelon (seedless)</span>
+            <span class="food-pill safe">Peanut butter (xylitol-free)</span>
+          </div>
+        </div>
+        <div class="food-group" style="margin-top:12px;">
+          <div class="food-group-title" style="color:#fb923c; margin-bottom:8px;">🤒 Upset tummy? Try this</div>
+          <div style="background:rgba(251,146,60,0.08); border:1px solid rgba(251,146,60,0.25); border-radius:10px; padding:10px 12px; font-size:13px; color:#fdba74; line-height:1.6;">
+            Plain white rice + plain boiled chicken<br>
+            <span style="color:#94a3b8;">— or —</span><br>
+            A spoonful of plain pumpkin purée (not pie filling)
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Character Traits -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">🐾</span>
+        <span class="section-title">Personality</span>
+      </div>
+      <div class="section-body">
+        <div class="trait">
+          <span class="trait-emoji">😴</span>
+          <span><strong>Mostly low energy</strong> — happy to chill, but watch out for the zoomies if he gets hyped up!</span>
+        </div>
+        <div class="trait">
+          <span class="trait-emoji">🦴</span>
+          <span><strong>Tug of war champ</strong> — not a fetch dog, but he will go hard on tug. Great way to tire him out.</span>
+        </div>
+        <div class="trait">
+          <span class="trait-emoji">🍗</span>
+          <span><strong>Food motivated</strong> — grunts on schedule for meals. Don't skip or he'll let you know.</span>
+        </div>
+        <div class="trait">
+          <span class="trait-emoji">🛋️</span>
+          <span><strong>Furniture allowed</strong> — he's allowed on the couch and bed, no need to keep him off.</span>
+        </div>
+        <div class="trait">
+          <span class="trait-emoji">🛏️</span>
+          <span><strong>Sleeps in his own bed</strong> — put his bed right next to yours at night. He needs to be near his people but will settle in his own spot.</span>
+        </div>
+        <div class="trait">
+          <span class="trait-emoji">🤗</span>
+          <span><strong>Affectionate & people-oriented</strong> — loves attention and cuddles.</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Medications -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">💊</span>
+        <span class="section-title">Medications</span>
+      </div>
+      <div class="section-body">
+        <div class="med-row">
+          <span style="font-size:22px;">✅</span>
+          <div>
+            <div class="med-name">No meds needed for this stay</div>
+            <div class="med-note">Odin is on a monthly chewable (Simparica Trio) given on the 25th — that won't fall during your time with him. Nothing to worry about!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Feeding Schedule -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">🥣</span>
+        <span class="section-title">Feeding Schedule</span>
+      </div>
+      <div class="section-body">
+        <div class="trait">
+          <span class="trait-emoji">🌅</span>
+          <span><strong>Morning</strong> — 1 cup · 7:00–7:30am</span>
+        </div>
+        <div class="trait">
+          <span class="trait-emoji">🌆</span>
+          <span><strong>Afternoon</strong> — 1 cup · 4:00–4:30pm</span>
+        </div>
+        <div class="trait" style="border-bottom:none; padding-bottom:0;">
+          <span class="trait-emoji">🚶</span>
+          <span><strong>Potty break after each meal</strong> — take him out after both morning and afternoon feeding.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Owner Contact -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-icon">👤</span>
+        <span class="section-title">Owner Contact</span>
+      </div>
+      <div class="section-body">
+        <div class="vet-row">
+          <span class="vet-label">👤 Name</span>
+          <span class="vet-value">Benn</span>
+        </div>
+        <div class="vet-row">
+          <span class="vet-label">📱 Phone</span>
+          <span class="vet-value"><a href="tel:14156290114" style="color:#818cf8">+1 (415) 629-0114</a></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">Made with ❤️ for Odin 🐾</div>
+
+  </div>
+</body>
+</html>
